@@ -1,0 +1,34 @@
+package com.lti.training.dao;
+
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.springframework.stereotype.Repository;
+import com.lti.training.dto.customerDto;
+import com.lti.training.entity.Customer;
+
+
+@Repository
+public class CustomerDao {
+
+	@PersistenceContext
+	private EntityManager entityManager;
+
+	public void add(Customer customer) {
+		System.out.println("Hey"+customer.getFirstname());
+		
+		entityManager.merge(customer);
+	}
+
+	public Customer fetch(int id) {
+		return entityManager.find(Customer.class, id);
+	}
+
+	public List<Customer> fetchAll() {
+		Query q = entityManager.createQuery("select obj from Customer as obj");
+		return q.getResultList();
+	}
+	
+
+}
